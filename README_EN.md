@@ -6,9 +6,12 @@
 
 Each skill lives in its own top-level directory and can be copied or symlinked into `~/.codex/skills/`. More reusable BGGG workflows, tool wrappers, and creative capabilities will be added here over time.
 
+Created by [@binggandata](https://github.com/binggandata) · [小红书](https://xhslink.com/m/4ndptyfq4vu) · [X / Twitter](https://x.com/bggg_ai) · WeChat: binggandata2
+
 ## Skills
 
 - [`bggg-creator-image2psd`](./bggg-creator-image2psd): turn one or more images into layered PSD files, with Codex/imagegen-assisted workflows, full-canvas PNG layer export, color splitting, white-background removal, and a pure-Python PSD writer.
+- [`bggg-skill-taotie`](./bggg-skill-taotie): a skill evolution engine that compares, analyzes, and absorbs useful patterns from one skill into another.
 
 ## Install
 
@@ -45,15 +48,21 @@ bggg-skills/
 ├── README.md
 ├── README_EN.md
 ├── LICENSE
-└── bggg-creator-image2psd/
+├── bggg-creator-image2psd/
+│   ├── SKILL.md
+│   ├── README.md
+│   ├── README_EN.md
+│   ├── scripts/
+│   ├── references/
+│   ├── assets/
+│   ├── evals/
+│   └── projects/
+└── bggg-skill-taotie/
     ├── SKILL.md
     ├── README.md
-    ├── README_EN.md
-    ├── scripts/
+    ├── INSTALL.md
     ├── references/
-    ├── assets/
-    ├── evals/
-    └── projects/
+    └── evals/
 ```
 
 `projects/` is the local runtime output directory for each skill. The open-source repo keeps only `.gitkeep` there and ignores generated images, PSDs, zips, and process files.
