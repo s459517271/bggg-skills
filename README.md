@@ -18,7 +18,6 @@ Created by [@binggandata](https://github.com/binggandata) · [小红书](https:/
 - [`bggg-tiktok-readvideo`](./bggg-tiktok-readvideo)：把 TikTok/UGC/本地视频拆成 Codex 可读的 metadata、transcript、scene、keyframe、contact sheet 和 timeline。
 - [`bggg-tiktok-cut`](./bggg-tiktok-cut)：用 JSON edit plan 和 FFmpeg 把 AI 视频、本地素材或口播素材剪成 9:16 TikTok 成片。
 - [`bggg-tiktok-capcut`](./bggg-tiktok-capcut)：基于已有 CapCut 模板草稿生成新草稿，提取模板样式，验证草稿结构，并检查 AI 视频痕迹。
-- [`bggg-tiktok-seedance`](./bggg-tiktok-seedance)：通过用户配置的 Seedance Gateway 做单条或批量并发视频生成，支持参考媒体和虚拟资产。
 
 ## 安装
 
@@ -88,12 +87,11 @@ bggg-skills/
 ├── bggg-tiktok-downloader/
 ├── bggg-tiktok-readvideo/
 ├── bggg-tiktok-cut/
-├── bggg-tiktok-capcut/
-└── bggg-tiktok-seedance/
+└── bggg-tiktok-capcut/
 ```
 
 `projects/` 是 skill 运行时的本地项目输出目录。开源仓库只保留 `.gitkeep`，不会提交实际生成的图片、PSD、zip 或过程文件。
-TikTok 系列还会忽略下载视频、截图、CSV/JSON 调研包、字幕、转写、CapCut 草稿和 Seedance 生成结果。
+TikTok 系列还会忽略下载视频、截图、CSV/JSON 调研包、字幕、转写和 CapCut 草稿。
 
 ## 贡献新 Skill
 

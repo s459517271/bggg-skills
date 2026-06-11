@@ -18,7 +18,6 @@ Created by [@binggandata](https://github.com/binggandata) · [小红书](https:/
 - [`bggg-tiktok-readvideo`](./bggg-tiktok-readvideo): turn TikTok/UGC/local videos into metadata, transcripts, scenes, keyframes, contact sheets, and timelines that Codex can read.
 - [`bggg-tiktok-cut`](./bggg-tiktok-cut): render 9:16 TikTok edits from AI videos, local footage, or talking-head clips using JSON edit plans and FFmpeg.
 - [`bggg-tiktok-capcut`](./bggg-tiktok-capcut): create new editable CapCut drafts from template drafts, extract styles, validate draft structure, and check AI-video artifacts.
-- [`bggg-tiktok-seedance`](./bggg-tiktok-seedance): generate single or concurrent Seedance videos through a user-configured Gateway, with reference media and virtual assets.
 
 ## Install
 
@@ -88,12 +87,11 @@ bggg-skills/
 ├── bggg-tiktok-downloader/
 ├── bggg-tiktok-readvideo/
 ├── bggg-tiktok-cut/
-├── bggg-tiktok-capcut/
-└── bggg-tiktok-seedance/
+└── bggg-tiktok-capcut/
 ```
 
 `projects/` is the local runtime output directory for each skill. The open-source repo keeps only `.gitkeep` there and ignores generated images, PSDs, zips, and process files.
-The TikTok skills also ignore downloaded videos, screenshots, CSV/JSON research exports, subtitles, transcripts, CapCut drafts, and Seedance outputs.
+The TikTok skills also ignore downloaded videos, screenshots, CSV/JSON research exports, subtitles, transcripts, and CapCut drafts.
 
 ## Adding More Skills
 
