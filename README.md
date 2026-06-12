@@ -18,6 +18,9 @@ Created by [@binggandata](https://github.com/binggandata) · [小红书](https:/
 - [`bggg-tiktok-readvideo`](./bggg-tiktok-readvideo)：把 TikTok/UGC/本地视频拆成 Codex 可读的 metadata、transcript、scene、keyframe、contact sheet 和 timeline。
 - [`bggg-tiktok-cut`](./bggg-tiktok-cut)：用 JSON edit plan 和 FFmpeg 把 AI 视频、本地素材或口播素材剪成 9:16 TikTok 成片。
 - [`bggg-tiktok-capcut`](./bggg-tiktok-capcut)：基于已有 CapCut 模板草稿生成新草稿，提取模板样式，验证草稿结构，并检查 AI 视频痕迹。
+- [`sif-keyword-scout`](./sif-keyword-scout)：亚马逊 Sif 关键词三表处理、分层评级、竞品弱点/广告缺口分析，并输出 PD 主攻词单与 Word 报告。
+- [`sif-keyword-tracker`](./sif-keyword-tracker)：同一 ASIN 有历史记录时，对比 1-7 天窗口内两期 PD 词单，输出词库更新与投放建议报告。
+- [`web-access`](./web-access)：第三方 MIT skill，由 [eze-is/web-access](https://github.com/eze-is/web-access) 提供；在 Sif 工作流中可选用于浏览器 CDP 自动导出。
 
 ## 安装
 
@@ -35,6 +38,8 @@ mkdir -p ~/.codex/skills
 cp -R bggg-creator-image2psd ~/.codex/skills/
 cp -R bggg-creator-image2ppt ~/.codex/skills/
 cp -R bggg-tiktok-readvideo ~/.codex/skills/
+cp -R sif-keyword-scout sif-keyword-tracker web-access ~/.codex/skills/
+cp .sif-config.example.json ~/.codex/skills/
 ```
 
 开发时也可以用软链接：
@@ -43,6 +48,10 @@ cp -R bggg-tiktok-readvideo ~/.codex/skills/
 ln -s "$PWD/bggg-creator-image2psd" ~/.codex/skills/bggg-creator-image2psd
 ln -s "$PWD/bggg-creator-image2ppt" ~/.codex/skills/bggg-creator-image2ppt
 ln -s "$PWD/bggg-tiktok-readvideo" ~/.codex/skills/bggg-tiktok-readvideo
+ln -s "$PWD/sif-keyword-scout" ~/.codex/skills/sif-keyword-scout
+ln -s "$PWD/sif-keyword-tracker" ~/.codex/skills/sif-keyword-tracker
+ln -s "$PWD/web-access" ~/.codex/skills/web-access
+cp .sif-config.example.json ~/.codex/skills/
 ```
 
 如果 skill 目录下有 `scripts/requirements.txt`，再安装它的依赖：
@@ -52,6 +61,14 @@ python3 -m pip install -r ~/.codex/skills/bggg-creator-image2psd/scripts/require
 python3 -m pip install -r ~/.codex/skills/bggg-creator-image2ppt/scripts/requirements.txt
 ```
 
+Sif 关键词工作流依赖：
+
+```bash
+python3 -m pip install pandas openpyxl matplotlib python-docx numpy
+```
+
+首次运行 `sif-keyword-scout` 时，Agent 会把 `.sif-config.example.json` 复制为本地 `.sif-config.json`，并询问报告输出目录。`.sif-config.json`、Sif 导出表、Word/Excel 产物都不会提交到仓库。
+
 ## 仓库结构
 
 ```text
@@ -59,6 +76,7 @@ bggg-skills/
 ├── README.md
 ├── README_EN.md
 ├── LICENSE
+├── .sif-config.example.json
 ├── bggg-creator-image2psd/
 │   ├── SKILL.md
 │   ├── README.md
@@ -87,7 +105,10 @@ bggg-skills/
 ├── bggg-tiktok-downloader/
 ├── bggg-tiktok-readvideo/
 ├── bggg-tiktok-cut/
-└── bggg-tiktok-capcut/
+├── bggg-tiktok-capcut/
+├── sif-keyword-scout/
+├── sif-keyword-tracker/
+└── web-access/
 ```
 
 `projects/` 是 skill 运行时的本地项目输出目录。开源仓库只保留 `.gitkeep`，不会提交实际生成的图片、PSD、zip 或过程文件。

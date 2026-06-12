@@ -1,0 +1,7 @@
+{
+  "_comment": "复制为 .sif-config.json 后由用户填写；打包分发时不要包含个人 .sif-config.json",
+  "output_dir": "",
+  "download_dir": "",
+  "sif_url": "https://www.sif.com/skill/keywords-library?country=US",
+  "default_product_type": "非标品"
+}
