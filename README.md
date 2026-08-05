@@ -18,6 +18,7 @@ Created by [@binggandata](https://github.com/binggandata) · [小红书](https:/
 - [`bggg-tiktok-readvideo`](./bggg-tiktok-readvideo)：把 TikTok/UGC/本地视频拆成 Codex 可读的 metadata、transcript、scene、keyframe、contact sheet 和 timeline。
 - [`bggg-tiktok-cut`](./bggg-tiktok-cut)：用 JSON edit plan 和 FFmpeg 把 AI 视频、本地素材或口播素材剪成 9:16 TikTok 成片。
 - [`bggg-tiktok-capcut`](./bggg-tiktok-capcut)：基于已有 CapCut 模板草稿生成新草稿，提取模板样式，验证草稿结构，并检查 AI 视频痕迹。
+- [`tiktok-gemini-video-workflow`](./tiktok-gemini-video-workflow)：把飞书 Base 中的产品图和爆款视频转成可追踪、可返工的 TikTok 带货视频工作流，覆盖 Gemini/Flow 额度路由、9:16 九宫格、逐帧提示词、尾帧续接、后期验收和成品回传。
 - [`sif-keyword-scout`](./sif-keyword-scout)：亚马逊 Sif 关键词三表处理、分层评级、竞品弱点/广告缺口分析，并输出 PD 主攻词单与 Word 报告。
 - [`sif-keyword-tracker`](./sif-keyword-tracker)：同一 ASIN 有历史记录时，对比 1-7 天窗口内两期 PD 词单，输出词库更新与投放建议报告。
 - [`web-access`](./web-access)：第三方 MIT skill，由 [eze-is/web-access](https://github.com/eze-is/web-access) 提供；在 Sif 工作流中可选用于浏览器 CDP 自动导出。
@@ -106,6 +107,7 @@ bggg-skills/
 ├── bggg-tiktok-readvideo/
 ├── bggg-tiktok-cut/
 ├── bggg-tiktok-capcut/
+├── tiktok-gemini-video-workflow/
 ├── sif-keyword-scout/
 ├── sif-keyword-tracker/
 └── web-access/

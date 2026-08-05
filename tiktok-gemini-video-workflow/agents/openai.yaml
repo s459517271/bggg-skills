@@ -1,0 +1,4 @@
+interface:
+  display_name: "TikTok Gemini 视频工厂"
+  short_description: "9格分镜图、全英文逐帧视频提示词、额度路由、去水印与返工回传"
+  default_prompt: "使用 $tiktok-gemini-video-workflow 从环境预检和飞书任务表开始，先处理人工返工；分镜图固定制作一张9:16九宫格，视频提示词则独立重读原片，把每一个画面状态写成VIDEO FRAME 01...N并逐帧写清时间码、左右肢体、商品零件状态、功能接触、音频和连续性，第二段从真实尾帧续接，按Google账号额度路由Gemini/Flow，去水印并按原片补齐文字钩子，最后回传待验收成品。"

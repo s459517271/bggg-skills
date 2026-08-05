@@ -18,6 +18,7 @@ Created by [@binggandata](https://github.com/binggandata) · [小红书](https:/
 - [`bggg-tiktok-readvideo`](./bggg-tiktok-readvideo): turn TikTok/UGC/local videos into metadata, transcripts, scenes, keyframes, contact sheets, and timelines that Codex can read.
 - [`bggg-tiktok-cut`](./bggg-tiktok-cut): render 9:16 TikTok edits from AI videos, local footage, or talking-head clips using JSON edit plans and FFmpeg.
 - [`bggg-tiktok-capcut`](./bggg-tiktok-capcut): create new editable CapCut drafts from template drafts, extract styles, validate draft structure, and check AI-video artifacts.
+- [`tiktok-gemini-video-workflow`](./tiktok-gemini-video-workflow): turn product images and viral videos in Feishu Base into a trackable, reviewable TikTok commerce-video workflow with Gemini/Flow quota routing, 9:16 storyboards, frame-by-frame prompts, tail-frame continuation, post-processing QA, and artifact write-back.
 - [`sif-keyword-scout`](./sif-keyword-scout): process three Amazon Sif keyword exports, grade keyword layers, analyze competitor weaknesses and ad gaps, then generate PD focus keyword sheets and Word reports.
 - [`sif-keyword-tracker`](./sif-keyword-tracker): compare two historical PD keyword lists for the same ASIN within a 1-7 day window and generate keyword-change and campaign-action reports.
 - [`web-access`](./web-access): third-party MIT skill from [eze-is/web-access](https://github.com/eze-is/web-access); optionally used by the Sif workflow for browser/CDP exports.
@@ -106,6 +107,7 @@ bggg-skills/
 ├── bggg-tiktok-readvideo/
 ├── bggg-tiktok-cut/
 ├── bggg-tiktok-capcut/
+├── tiktok-gemini-video-workflow/
 ├── sif-keyword-scout/
 ├── sif-keyword-tracker/
 └── web-access/
