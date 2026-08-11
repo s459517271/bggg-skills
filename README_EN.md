@@ -13,6 +13,9 @@ Created by [@binggandata](https://github.com/binggandata) · [小红书](https:/
 - [`bggg-creator-image2psd`](./bggg-creator-image2psd): turn one or more images into layered PSD files, with Codex/imagegen-assisted workflows, full-canvas PNG layer export, color splitting, white-background removal, and a pure-Python PSD writer.
 - [`bggg-creator-image2ppt`](./bggg-creator-image2ppt): turn images, screenshots, HTML, or SVG designs into editable PPTX files, with Codex/imagegen-assisted component reconstruction, editable text boxes, native shape rebuilding, and HTML/SVG parsing.
 - [`bggg-skill-taotie`](./bggg-skill-taotie): a skill evolution engine that compares, analyzes, and absorbs useful patterns from one skill into another.
+- [`bggg-data-amazon`](./bggg-data-amazon): collect Amazon written reviews at scale through Woot's public review AJAX route, retaining every attempt and error log and normalizing exact review text into auditable JSONL.
+- [`bggg-data-reddit`](./bggg-data-reddit): collect Reddit search results and full comment trees at scale, preserving source JSON and normalizing posts and comments into analysis-ready JSONL.
+- [`bggg-data-x`](./bggg-data-x): search X in the user's logged-in Chrome, collect visible original posts, and normalize post text and metadata into JSONL.
 - [`bggg-tiktok-search`](./bggg-tiktok-search): read-only TikTok research through a real local Chrome session, producing JSON/CSV/Markdown notes and screenshot evidence.
 - [`bggg-tiktok-downloader`](./bggg-tiktok-downloader): download TikTok single videos or visible creator posts with `yt-dlp`, with a tikwm fallback for single videos.
 - [`bggg-tiktok-readvideo`](./bggg-tiktok-readvideo): turn TikTok/UGC/local videos into metadata, transcripts, scenes, keyframes, contact sheets, and timelines that Codex can read.
@@ -96,6 +99,9 @@ bggg-skills/
 │   ├── assets/
 │   ├── evals/
 │   └── projects/
+├── bggg-data-amazon/
+├── bggg-data-reddit/
+├── bggg-data-x/
 ├── bggg-skill-taotie/
 │   ├── SKILL.md
 │   ├── README.md

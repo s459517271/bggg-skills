@@ -1,0 +1,4 @@
+interface:
+  display_name: "BGGG Reddit Data"
+  short_description: "抓取并规范化 Reddit 搜索结果与完整评论树数据"
+  default_prompt: "Use $bggg-data-reddit to collect auditable Reddit search results and full comment trees into normalized JSONL."
