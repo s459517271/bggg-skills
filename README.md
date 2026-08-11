@@ -13,6 +13,9 @@ Created by [@binggandata](https://github.com/binggandata) · [小红书](https:/
 - [`bggg-creator-image2psd`](./bggg-creator-image2psd)：把一张或多张图片转成可编辑的分层 PSD，支持 Codex/imagegen 辅助拆图、全画布 PNG 图层导出、颜色拆层、白底转透明，以及纯 Python PSD 写入。
 - [`bggg-creator-image2ppt`](./bggg-creator-image2ppt)：把图片、截图、HTML 或 SVG 设计稿转成可编辑 PPTX，支持 Codex/imagegen 辅助组件重建、文本框还原、原生形状重建，以及 HTML/SVG 解析到 PPTX。
 - [`bggg-skill-taotie`](./bggg-skill-taotie)：Skill 进化器，通过对比、分析和吸收其他 skill 的优势，帮助目标 skill 渐进式升级。
+- [`bggg-data-amazon`](./bggg-data-amazon)：通过 Woot 公开评论接口批量采集亚马逊商品文字评论，保留每次尝试与错误日志，规范化成可审计 JSONL。
+- [`bggg-data-reddit`](./bggg-data-reddit)：批量采集 Reddit 搜索结果与完整评论树，保留源 JSON，规范化成分析用 JSONL。
+- [`bggg-data-x`](./bggg-data-x)：复用已登录 Chrome 搜索并采集 X 可见原帖，提取原文与元数据，规范化成 JSONL。
 - [`bggg-tiktok-search`](./bggg-tiktok-search)：复用本地真实 Chrome 登录态做 TikTok 只读调研，输出 JSON/CSV/Markdown 和截图证据。
 - [`bggg-tiktok-downloader`](./bggg-tiktok-downloader)：用 `yt-dlp` 下载 TikTok 单视频或博主可见作品，单视频失败时用 tikwm 兜底。
 - [`bggg-tiktok-readvideo`](./bggg-tiktok-readvideo)：把 TikTok/UGC/本地视频拆成 Codex 可读的 metadata、transcript、scene、keyframe、contact sheet 和 timeline。
@@ -96,6 +99,9 @@ bggg-skills/
 │   ├── assets/
 │   ├── evals/
 │   └── projects/
+├── bggg-data-amazon/
+├── bggg-data-reddit/
+├── bggg-data-x/
 ├── bggg-skill-taotie/
 │   ├── SKILL.md
 │   ├── README.md
