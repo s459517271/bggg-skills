@@ -33,6 +33,7 @@ import sys
 import time
 import argparse
 from datetime import datetime
+import urllib.error
 
 
 HEADERS = {
@@ -45,7 +46,7 @@ HEADERS = {
 BASE_URL = "https://www.woot.com/review/Reviews/"
 
 
-def fetch_reviews(asin, filter_val=0, sort_val=0, delay=0.2):
+def fetch_reviews(asin, filter_val=0, sort_val=0, delay=0.2, request_errors=None):
     """Fetch reviews for a single (filter, sort) combination. Max 100 reviews."""
     url_base = BASE_URL + asin
     reviews = []
@@ -74,6 +75,16 @@ def fetch_reviews(asin, filter_val=0, sort_val=0, delay=0.2):
                 data = json.loads(resp.read().decode())
         except Exception as e:
             print(f"  Error (filter={filter_val}, sort={sort_val}, page={page_num}): {e}", file=sys.stderr)
+            if request_errors is not None:
+                error = {
+                    "filter": filter_val,
+                    "sort": sort_val,
+                    "page": page_num,
+                    "error": str(e),
+                }
+                if isinstance(e, urllib.error.HTTPError):
+                    error["http_status"] = e.code
+                request_errors.append(error)
             break
 
         batch = data.get("Reviews", [])
@@ -99,22 +110,24 @@ def review_key(r):
     return (author, title, text)
 
 
-def scrape_basic(asin):
+def scrape_basic(asin, request_errors=None):
     """Basic mode: filter=0, sort=0, max 100 reviews."""
     print(f"[basic] Scraping {asin} ...", file=sys.stderr)
-    reviews = fetch_reviews(asin, filter_val=0, sort_val=0)
+    reviews = fetch_reviews(asin, filter_val=0, sort_val=0, request_errors=request_errors)
     print(f"[basic] Got {len(reviews)} reviews", file=sys.stderr)
     return reviews
 
 
-def scrape_full(asin):
+def scrape_full(asin, request_errors=None):
     """Full mode: split by star rating, max 100 per star."""
     print(f"[full] Scraping {asin} by star rating ...", file=sys.stderr)
     seen = set()
     unique = []
 
     for star in [5, 4, 3, 2, 1]:
-        revs = fetch_reviews(asin, filter_val=star, sort_val=0)
+        revs = fetch_reviews(
+            asin, filter_val=star, sort_val=0, request_errors=request_errors
+        )
         new_count = 0
         for r in revs:
             k = review_key(r)
@@ -128,7 +141,7 @@ def scrape_full(asin):
     return unique
 
 
-def scrape_max(asin):
+def scrape_max(asin, request_errors=None):
     """Max mode: 5 star ratings x 4 sort orders, deduplicated for maximum extraction."""
     print(f"[max] Scraping {asin} (star x sort combinations) ...", file=sys.stderr)
     seen = set()
@@ -138,7 +151,13 @@ def scrape_max(asin):
     for star in [5, 4, 3, 2, 1]:
         star_before = len(unique)
         for sort_val in [0, 1, 2, 3]:
-            revs = fetch_reviews(asin, filter_val=star, sort_val=sort_val, delay=0.15)
+            revs = fetch_reviews(
+                asin,
+                filter_val=star,
+                sort_val=sort_val,
+                delay=0.15,
+                request_errors=request_errors,
+            )
             new_count = 0
             for r in revs:
                 k = review_key(r)
@@ -259,6 +278,12 @@ def build_summary(asin, reviews, mode):
     }
 
 
+def collection_status(reviews, request_errors):
+    if reviews:
+        return "partial" if request_errors else "complete"
+    return "failed" if request_errors else "complete_no_reviews"
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Amazon Review Scraper - Scrape Amazon reviews via woot.com AJAX API"
@@ -271,21 +296,25 @@ def main():
 
     args = parser.parse_args()
 
-    # Scrape
+    request_errors = []
     if args.mode == "basic":
-        reviews = scrape_basic(args.asin)
+        reviews = scrape_basic(args.asin, request_errors=request_errors)
     elif args.mode == "full":
-        reviews = scrape_full(args.asin)
+        reviews = scrape_full(args.asin, request_errors=request_errors)
     else:
-        reviews = scrape_max(args.asin)
+        reviews = scrape_max(args.asin, request_errors=request_errors)
 
-    # Build output
+    status = collection_status(reviews, request_errors)
     summary = build_summary(args.asin, reviews, args.mode)
+    summary["collection_status"] = status
+    summary["request_error_count"] = len(request_errors)
 
     if args.summary:
         output = json.dumps(summary, ensure_ascii=False, indent=2)
     else:
         output = json.dumps({
+            "status": status,
+            "request_errors": request_errors,
             "summary": summary,
             "reviews": reviews,
         }, ensure_ascii=False, indent=2)
@@ -307,7 +336,9 @@ def main():
     print(f"Verified: {summary['verified_purchases']}", file=sys.stderr)
     print(f"With images: {summary['with_images']}", file=sys.stderr)
     print(f"With video: {summary['with_video']}", file=sys.stderr)
+    print(f"Status: {status}", file=sys.stderr)
+    return 2 if status == "failed" else 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
