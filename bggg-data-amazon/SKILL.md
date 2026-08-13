@@ -56,6 +56,8 @@ The runner:
 - saves each attempt JSON plus stdout/stderr logs;
 - caps concurrency at two workers;
 - treats `Error (filter=` in stderr as a partial-run marker even when exit code is zero;
+- marks HTTP/request failures with no collected rows as `failed` instead of publishing an empty partial result;
+- marks a successful JSON response with no visible written reviews as `complete_no_reviews`;
 - retries with backoff;
 - unions every parseable attempt and exact-deduplicates review content;
 - writes `acquisition_manifest.json` and one reconciled `ASIN_mode.json` per target.
@@ -93,6 +95,7 @@ Use `--keywords keywords.txt` to add literal hit labels.
 - A high-volume five-star bucket can remain truncated even in `max` mode.
 - Review author/title/body exact dedupe can merge syndicated variant reviews; retain the ASIN list so the merge remains auditable.
 - The Woot route is public but not a completeness guarantee. Describe results as collected written reviews, not all customer ratings.
+- A valid Amazon ASIN can still be unavailable through Woot. Treat its HTTP 404 as an unsupported target, not proof that the route is globally unavailable.
 
 ## Resources
 

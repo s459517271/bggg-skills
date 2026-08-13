@@ -63,6 +63,8 @@ def inspect_json(path: Path, stderr: str, exit_code: int, elapsed: float) -> dic
         "review_rows": 0,
         "unique_review_rows": 0,
         "empty_text_rows": 0,
+        "scrape_status": None,
+        "request_error_count": 0,
         "clean": False,
     }
     try:
@@ -74,13 +76,17 @@ def inspect_json(path: Path, stderr: str, exit_code: int, elapsed: float) -> dic
         result["review_rows"] = len(reviews)
         result["unique_review_rows"] = len({review_key(row) for row in reviews})
         result["empty_text_rows"] = sum(not compact(row.get("Text")) for row in reviews)
+        result["scrape_status"] = payload.get("status")
+        result["request_error_count"] = len(payload.get("request_errors") or [])
     except Exception as exc:
         result["json_error"] = str(exc)
+    if result["scrape_status"] is None and result["unique_review_rows"] > 0:
+        result["scrape_status"] = "complete"
     result["clean"] = bool(
         exit_code == 0
         and result["json_valid"]
         and not result["stderr_error_marker"]
-        and result["unique_review_rows"] > 0
+        and result["scrape_status"] in {"complete", "complete_no_reviews"}
     )
     return result
 
@@ -179,7 +185,10 @@ def run_target(target: dict, run_dir: Path, attempts: int, timeout: int) -> dict
             }
         )
         result["attempts"].append(inspected)
-        if inspected["json_valid"]:
+        if inspected["json_valid"] and (
+            inspected["unique_review_rows"] > 0
+            or inspected["scrape_status"] == "complete_no_reviews"
+        ):
             attempt_paths.append(json_path)
         print(
             json.dumps(
@@ -209,9 +218,19 @@ def run_target(target: dict, run_dir: Path, attempts: int, timeout: int) -> dict
         attempt_paths,
         run_dir / f"{asin}_{mode}.json",
     )
-    result["status"] = (
-        "complete" if any(item["clean"] for item in result["attempts"]) else "partial_best_available"
-    )
+    unique_reviews = result["reconciliation"]["unique_reviews"]
+    if unique_reviews == 0 and any(
+        item["clean"] and item["scrape_status"] == "complete_no_reviews"
+        for item in result["attempts"]
+    ):
+        result["status"] = "complete_no_reviews"
+    elif any(
+        item["clean"] and item["scrape_status"] == "complete"
+        for item in result["attempts"]
+    ):
+        result["status"] = "complete"
+    else:
+        result["status"] = "partial_best_available"
     return result
 
 
@@ -250,7 +269,12 @@ def main() -> None:
         "targets_file": str(args.targets),
         "workers": workers,
         "targets": results,
-        "complete_targets": sum(item["status"] == "complete" for item in results),
+        "complete_targets": sum(
+            item["status"] in {"complete", "complete_no_reviews"} for item in results
+        ),
+        "no_review_targets": sum(
+            item["status"] == "complete_no_reviews" for item in results
+        ),
         "partial_targets": sum(item["status"] == "partial_best_available" for item in results),
         "failed_targets": sum(item["status"] == "failed" for item in results),
         "unique_sum_before_cross_asin_dedupe": sum(
@@ -267,6 +291,7 @@ def main() -> None:
             {
                 "manifest": str(manifest_path),
                 "complete_targets": manifest["complete_targets"],
+                "no_review_targets": manifest["no_review_targets"],
                 "partial_targets": manifest["partial_targets"],
                 "failed_targets": manifest["failed_targets"],
                 "unique_sum_before_cross_asin_dedupe": manifest[
